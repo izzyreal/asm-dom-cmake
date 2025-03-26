@@ -22,14 +22,38 @@ add_executable(main src/main.cpp)
 set_property(TARGET main PROPERTY CXX_STANDARD 11)
 target_link_libraries(main PRIVATE asm-dom)
 
-# Copy the index.html file into the build directory
-configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/index.html
-  ${CMAKE_CURRENT_BINARY_DIR}/index.html
+# Copy index.html after the target is built
+add_custom_command(
+  TARGET main
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/index.html
+    ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/product/index.html
+  COMMENT "Copying index.html to the build directory"
 )
 
-# Copy the style.ss file into the build directory
-configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/src/style.css
-  ${CMAKE_CURRENT_BINARY_DIR}/style.css
+# Copy style.css after the target is built
+add_custom_command(
+  TARGET main
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/style.css
+    ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/product/style.css
+  COMMENT "Copying style.css to the build directory"
+)
+
+add_custom_command(
+  TARGET main
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/main.js
+    ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/product/main.js
+)
+
+add_custom_command(
+  TARGET main
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/main.wasm
+    ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/product/main.wasm
 )

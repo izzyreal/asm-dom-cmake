@@ -20,13 +20,17 @@ if(NOT asm-dom_POPULATED)
   )
   set_property(TARGET asm-dom PROPERTY CXX_STANDARD 11)
   target_include_directories(asm-dom PUBLIC ${asm-dom_SOURCE_DIR}/cpp/)
-  configure_file(
-    ${asm-dom_SOURCE_DIR}/dist/js/asm-dom.js
-    ${CMAKE_CURRENT_BINARY_DIR}/asm-dom.js
-  )
-
   add_link_options(-sEXPORTED_RUNTIME_METHODS=['UTF8ToString'])
   add_link_options(-sWASM=1)
   add_link_options(--bind)
 endif()
+
+add_custom_command(
+  TARGET asm-dom
+  POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy
+    ${asm-dom_SOURCE_DIR}/dist/js/asm-dom.js
+    ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/product/asm-dom.js
+)
+
 message(STATUS "Checking for asm-dom: DONE")
