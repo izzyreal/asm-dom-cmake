@@ -5,8 +5,8 @@
 message(STATUS "Checking for asm-dom: Please wait")
 include(FetchContent)
 FetchContent_Declare(asm-dom
-  GIT_REPOSITORY https://github.com/mbasso/asm-dom
-  GIT_TAG 49131a4ebe26383bafea213167561bffa2024f7c
+  GIT_REPOSITORY https://github.com/izzyreal/asm-dom
+  GIT_TAG master
 )
 
 FetchContent_GetProperties(asm-dom)
@@ -21,7 +21,7 @@ if(NOT asm-dom_POPULATED)
   set_property(TARGET asm-dom PROPERTY CXX_STANDARD 11)
   target_include_directories(asm-dom PUBLIC ${asm-dom_SOURCE_DIR}/cpp/)
   configure_file(
-    ${asm-dom_SOURCE_DIR}/dist/cpp/asm-dom.js
+    ${asm-dom_SOURCE_DIR}/dist/js/asm-dom.js
     ${CMAKE_CURRENT_BINARY_DIR}/asm-dom.js
   )
 
