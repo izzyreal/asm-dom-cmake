@@ -1,3 +1,5 @@
+Forked by Izmar to make it build and run. See https://github.com/ArthurSonzogni/asm-dom-cmake/issues/3 for an incomplete description of what I ran into before I was able to do so.
+
 # asm-dom-cmake
 
 Simple starter project: A web interface entirely built using C++ and cmake.
